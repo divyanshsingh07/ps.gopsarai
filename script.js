@@ -144,19 +144,21 @@ handleParallax();
 // Teacher data
 const teacherData = {
     'principal': {
-        name: 'श्रीमती सुनीता शर्मा',
+        id: 'principal',
+        name: 'श्री धर्मेंद्र पांडेय',
         title: 'प्रधानाचार्य',
         education: 'एम.ए. (हिंदी), बी.एड., पीएच.डी.',
         experience: '25 वर्ष',
         subjects: 'हिंदी साहित्य, शैक्षिक प्रबंधन',
         quote: 'शिक्षा का उद्देश्य केवल ज्ञान देना नहीं, बल्कि चरित्र निर्माण करना है।',
-        bio: 'श्रीमती सुनीता शर्मा ने 25 वर्षों से अधिक का शैक्षिक अनुभव प्राप्त किया है। उन्होंने कई प्रतिष्ठित विद्यालयों में शिक्षण कार्य किया है और शैक्षिक प्रबंधन में विशेषज्ञता प्राप्त की है। वे छात्रों के समग्र विकास पर विशेष ध्यान देती हैं और नवीन शिक्षण पद्धतियों को अपनाने में अग्रणी रही हैं।',
+        bio: 'श्री धर्मेंद्र पांडेय ने 25 वर्षों से अधिक का शैक्षिक अनुभव प्राप्त किया है। उन्होंने कई प्रतिष्ठित विद्यालयों में शिक्षण कार्य किया है और शैक्षिक प्रबंधन में विशेषज्ञता प्राप्त की है।',
         contact: {
             phone: '+91 98765 43210',
             email: 'principal@school.com'
         }
     },
     'teacher1': {
+        id: 'teacher1',
         name: 'श्री दीपक मिश्रा',
         title: 'वरिष्ठ शिक्षक',
         education: 'एम.एससी. (गणित), बी.एड.',
@@ -170,6 +172,7 @@ const teacherData = {
         }
     },
     'teacher2': {
+        id: 'teacher2',
         name: 'श्री हेमंत पांडेय',
         title: 'वरिष्ठ शिक्षक',
         education: 'एम.ए. (हिंदी), बी.एड.',
@@ -183,6 +186,7 @@ const teacherData = {
         }
     },
     'teacher3': {
+        id: 'teacher3',
         name: 'श्रीमती किरण सिंह',
         title: 'वरिष्ठ शिक्षक',
         education: 'एम.एससी. (भौतिक विज्ञान), बी.एड.',
@@ -196,6 +200,7 @@ const teacherData = {
         }
     },
     'teacher4': {
+        id: 'teacher4',
         name: 'श्री रामकेवल',
         title: 'वरिष्ठ शिक्षक',
         education: 'एम.ए. (अंग्रेजी), बी.एड.',
@@ -207,48 +212,88 @@ const teacherData = {
             phone: '+91 98765 43214',
             email: 'ramkeval@school.com'
         }
+    },
+    'kitchen1': {
+        id: 'kitchen1',
+        name: 'श्री शिव शंकर',
+        title: 'प्रमुख रसोईया',
+        experience: '12 वर्ष',
+        quote: 'स्वस्थ भोजन स्वस्थ जीवन की नींव है।',
+        bio: 'श्री शिशंकर ने 12 वर्षों से अधिक का अनुभव रखते हैं। वे विद्यार्थियों को पौष्टिक और स्वादिष्ट भोजन प्रदान करने के लिए समर्पित हैं। उनकी विशेषज्ञता बाल पोषण और स्वस्थ भोजन तैयार करने में है।',
+        contact: {
+            phone: '+91 98765 43215',
+            email: 'shishankar@school.com'
+        }
+    },
+    'kitchen2': {
+        id: 'kitchen2',
+        name: 'श्रीमती मिश्रीयन',
+        title: 'सहायक रसोईया',
+      
+        experience: '8 वर्ष',
+  
+        quote: 'स्वच्छता और स्वास्थ्य हमारी प्राथमिकता है।',
+        bio: 'श्रीमती मिश्रीयन भोजन की गुणवत्ता और स्वच्छता सुनिश्चित करने में निपुण हैं। वे खाद्य सुरक्षा मानकों का कड़ाई से पालन करती हैं और स्वस्थ भोजन तैयार करने में विशेषज्ञ हैं।',
+        contact: {
+            phone: '+91 98765 43216',
+            email: 'mishriyan@school.com'
+        }
     }
 };
 
 // Function to open modal
 function openModal(teacher) {
+    if (!teacher) return;
+
     const teacherImage = document.getElementById('modalTeacherImage');
-    teacherImage.src = teacher.image || 'images/teacher-placeholder.jpg';
+    const modalTeacherName = document.getElementById('modalTeacherName');
+    const modalTeacherTitle = document.getElementById('modalTeacherTitle');
+    const modalTeacherEducation = document.getElementById('modalTeacherEducation');
+    const modalTeacherExperience = document.getElementById('modalTeacherExperience');
+    const modalTeacherSubjects = document.getElementById('modalTeacherSubjects');
+    const modalTeacherQuote = document.getElementById('modalTeacherQuote');
+    const modalTeacherBio = document.getElementById('modalTeacherBio');
+    const modalTeacherContact = document.getElementById('modalTeacherContact');
+
+    // Get the image from the clicked card
+    const clickedCard = document.querySelector(`[data-teacher-id="${teacher.id}"]`);
+    const cardImage = clickedCard ? clickedCard.querySelector('img') : null;
+    
+    if (cardImage) {
+        teacherImage.src = cardImage.src;
+    } else {
+        teacherImage.src = 'school.png'; // Default image if no card image found
+    }
+    
     teacherImage.onerror = function() {
-        this.src = 'images/teacher-placeholder.jpg';
+        this.src = 'school.png'; // Fallback image
     };
     
-    document.getElementById('modalTeacherName').textContent = teacher.name;
-    document.getElementById('modalTeacherTitle').textContent = teacher.title;
-    document.getElementById('modalTeacherEducation').textContent = teacher.education;
-    document.getElementById('modalTeacherExperience').textContent = teacher.experience;
-    document.getElementById('modalTeacherSubjects').textContent = teacher.subjects;
-    document.getElementById('modalTeacherQuote').textContent = teacher.quote;
-    document.getElementById('modalTeacherBio').textContent = teacher.bio;
+    // Update modal content with teacher information
+    modalTeacherName.textContent = teacher.name || '';
+    modalTeacherTitle.textContent = teacher.title || '';
+    modalTeacherEducation.textContent = teacher.education || '';
+    modalTeacherExperience.textContent = teacher.experience || '';
+    modalTeacherSubjects.textContent = teacher.subjects || '';
+    modalTeacherQuote.textContent = teacher.quote || '';
+    modalTeacherBio.textContent = teacher.bio || '';
     
     // Add contact information
-    const contactInfo = document.getElementById('modalTeacherContact');
-    if (contactInfo) {
-        contactInfo.innerHTML = `
+    if (modalTeacherContact && teacher.contact) {
+        modalTeacherContact.innerHTML = `
             <div class="contact-item">
                 <i class="fas fa-phone"></i>
-                <span>${teacher.contact.phone}</span>
+                <span>${teacher.contact.phone || ''}</span>
             </div>
             <div class="contact-item">
                 <i class="fas fa-envelope"></i>
-                <span>${teacher.contact.email}</span>
+                <span>${teacher.contact.email || ''}</span>
             </div>
         `;
     }
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-}
-
-// Function to close modal
-function closeModalFunc() {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
 }
 
 // Event Listeners
@@ -269,16 +314,24 @@ teacherCards.forEach(card => {
     });
 });
 
-closeModal.addEventListener('click', closeModalFunc);
+// Close modal when clicking the close button
+closeModal.addEventListener('click', () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+});
 
+// Close modal when clicking outside
 modal.addEventListener('click', (e) => {
     if (e.target === modal) {
-        closeModalFunc();
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
     }
 });
 
+// Close modal with Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.classList.contains('active')) {
-        closeModalFunc();
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
     }
 }); 
