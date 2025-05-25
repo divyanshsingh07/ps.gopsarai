@@ -227,7 +227,7 @@ const teacherData = {
     },
     'kitchen2': {
         id: 'kitchen2',
-        name: 'श्रीमती मिश्रीयन',
+        name: 'श्रीमती .....',
         title: 'सहायक रसोईया',
       
         experience: '8 वर्ष',
